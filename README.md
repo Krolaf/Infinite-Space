@@ -1,10 +1,11 @@
 # 🚀 Prototype Infinite Space - Exploration Spatiale 2D
 
 ## 📋 Description
-Prototype Unity 2D top-down pour un jeu d'exploration spatiale. Le joueur contrôle un vaisseau qui peut se déplacer librement dans un environnement spatial avec une base station fixe.
+Prototype Unity 2D top-down pour un jeu d'exploration spatiale. Le joueur contrôle un vaisseau qui peut se déplacer librement dans un environnement spatial généré dynamiquement autour d'une base station fixe.
 
 ## 🎮 Contrôles
 - **WASD** ou **Flèches directionnelles** : Déplacer le vaisseau
+- **E (Interact)** : Miner une ressource (maintenir pour miner)
 - **Escape** : Mettre en pause/reprendre le jeu
 - **Gamepad** : Stick gauche pour le mouvement
 
@@ -14,6 +15,12 @@ Prototype Unity 2D top-down pour un jeu d'exploration spatiale. Le joueur contr�
 - `Assets/Scenes/Exploration.unity` — Scène principale du prototype
 
 ### Scripts (`Assets/Scripts/`)
+- `ChunkManager.cs` — Génération/destruction dynamique des chunks autour du joueur
+- `Chunk.cs` — Informations sur chaque chunk (coordonnées, zone)
+- `SpaceObjectSpawner.cs` — Génération d’objets (ressources, etc.) dans chaque chunk
+- `Resource.cs` — Données et logique de chaque ressource (type, quantité, temps de minage, nom affiché)
+- `PlayerInventory.cs` — Gestion de l’inventaire du joueur (deutérium, minerai)
+- `PlayerMiner.cs` — Minage interactif (UI, barre, collecte après maintien de E)
 - `ShipController.cs` — Contrôle du mouvement du vaisseau
 - `BaseStation.cs` — Gestion de la base station
 - `CameraFollow.cs` — Suivi de caméra fluide
@@ -22,40 +29,50 @@ Prototype Unity 2D top-down pour un jeu d'exploration spatiale. Le joueur contr�
 
 ### Art (`Assets/Art/`)
 - **Sprites temporaires à créer dans Unity** :
-  - Utilise l'outil **Sprite Editor** ou **Sprites > Shapes** pour créer un triangle (vaisseau) et un cercle (base).
-  - Assigne-les dans les SpriteRenderer des GameObjects correspondants.
+  - Triangle (vaisseau), cercle (base), cercles colorés (ressources)
 
 ## 🎯 Fonctionnalités Implémentées
 
 ### ✅ Complété
-- [x] Mouvement du vaisseau avec WASD/flèches/gamepad
-- [x] Rotation automatique du vaisseau dans la direction du mouvement
-- [x] Caméra orthographique qui suit le vaisseau
+- [x] Génération procédurale de chunks autour du joueur
+- [x] Système de zones (difficulté/variété selon la distance à la base)
+- [x] Génération d’objets dans les chunks (ressources : Deutérium, Minerai...)
+- [x] Système de minage interactif :
+  - Affichage d’un message `[E Maintenir] Miner <nom>` et d’une barre de chargement
+  - Maintien de la touche E (Input System, action "Interact") pour miner
+  - Temps de minage paramétrable par ressource (ex : Deutérium = 1s, Minerai = 2s)
+  - Collecte de la ressource à la fin du minage, ajout à l’inventaire
+- [x] Inventaire du joueur (deutérium, minerai)
+- [x] UI : barre de minage (Image type Filled) et message (TextMeshProUGUI)
+- [x] Nouveau Input System Unity (toutes les interactions passent par "Interact")
+- [x] Mouvement du vaisseau, rotation automatique, suivi de caméra
 - [x] Base station fixe au centre (0,0)
-- [x] Nouveau Input System configuré
-- [x] Physique 2D avec Rigidbody2D (gravité désactivée)
 - [x] Système de pause avec Escape
 - [x] Graphismes temporaires via Unity Shapes
 
 ### 🔄 En cours / À améliorer
 - [ ] Collisions entre vaisseau et base
-- [ ] Interface utilisateur (UI)
-- [ ] Système de ressources/énergie
-- [ ] Plus d'objets spatiaux
+- [ ] Plus d'objets spatiaux (ennemis, commerçants, anomalies...)
+- [ ] Système de consommation de deutérium (fuel) lors des déplacements
+- [ ] Affichage du stock de ressources dans le HUD principal
+- [ ] Système de retour à la base et d’améliorations (modules, upgrades)
 - [ ] Effets visuels et sonores
+- [ ] Optimisation et gestion fine des priorités d’interaction
 
 ## 🚀 Comment Tester
 1. Ouvrir Unity et charger le projet
 2. Ouvrir la scène `Assets/Scenes/Exploration.unity`
 3. Vérifier que les scripts sont bien attachés sur les GameObjects
-4. Créer et assigner les sprites temporaires (triangle/cercle) dans les SpriteRenderer
+4. Créer et assigner les sprites temporaires (triangle/cercle/ressources) dans les SpriteRenderer
 5. Appuyer sur Play
 6. Utiliser WASD pour déplacer le vaisseau
-7. Observer la rotation automatique et le suivi de caméra
+7. Approcher une ressource, maintenir E pour miner et collecter
+8. Observer la génération dynamique des chunks et des ressources
 
 ## 🎨 Graphismes Temporaires
 - **Vaisseau** : Triangle bleu clair pointant vers le haut (à créer dans Unity)
 - **Base** : Cercle gris de 2x2 unités (à créer dans Unity)
+- **Ressources** : Cercles colorés (ex : bleu pour Deutérium, gris pour Minerai)
 - **Fond** : Noir pour simuler l'espace
 - **Caméra** : Orthographique, suit le vaisseau en douceur
 
@@ -71,12 +88,17 @@ Prototype Unity 2D top-down pour un jeu d'exploration spatiale. Le joueur contr�
 Le projet utilise le nouveau Input System d'Unity avec :
 - Action Map "Player"
 - Action "Move" (Vector2)
-- Bindings pour clavier (WASD, flèches) et gamepad
+- Action "Interact" (Button, bindée sur E)
+- Bindings pour clavier (WASD, flèches, E) et gamepad
 
 ### Architecture
-- **ShipController** : Gère le mouvement et la rotation
-- **PlayerInputHandler** : Interface avec le nouveau Input System
-- **CameraFollow** : Suivi fluide avec Lerp
+- **ChunkManager** : Génération/destruction dynamique des chunks
+- **SpaceObjectSpawner** : Génération d’objets dans chaque chunk
+- **Resource** : Données et logique de chaque ressource (type, quantité, temps de minage, nom affiché)
+- **PlayerMiner** : Minage interactif (UI, barre, collecte après maintien de E)
+- **PlayerInventory** : Gestion de l’inventaire du joueur
+- **ShipController** : Mouvement et rotation du vaisseau
+- **CameraFollow** : Suivi fluide
 - **BaseStation** : Prêt pour futures interactions
 - **GameManager** : Singleton pour la gestion globale
 
@@ -90,7 +112,9 @@ Le projet utilise le nouveau Input System d'Unity avec :
 ### Problèmes Courants
 1. **Vaisseau ne bouge pas** : Vérifier que PlayerInput est configuré et que le script ShipController est bien attaché
 2. **Caméra ne suit pas** : Vérifier le script CameraFollow et l'assignation de la cible
-3. **Erreurs de compilation** : Vérifier que tous les scripts sont dans Assets/Scripts/
+3. **Erreur Input System** : Vérifier que toutes les actions sont bien assignées dans l’Inspector
+4. **Ressource disparait sans minage** : Vérifier que la collecte automatique est bien désactivée dans PlayerInventory
+5. **Erreurs de compilation** : Vérifier que tous les scripts sont dans Assets/Scripts/
 
 ### Debug
 - Utiliser la Console Unity pour voir les logs
@@ -98,12 +122,12 @@ Le projet utilise le nouveau Input System d'Unity avec :
 - Tester les inputs dans l'Input Debugger
 
 ## 📈 Prochaines Étapes
-1. **UI/UX** : Ajouter une interface utilisateur
-2. **Gameplay** : Système de ressources et d'énergie
-3. **Contenu** : Plus d'objets spatiaux et d'exploration
-4. **Audio** : Effets sonores et musique
-5. **VFX** : Particules et effets visuels
-6. **Optimisation** : Performance et mémoire
+1. **Objets spatiaux** : Ajouter ennemis, commerçants, anomalies
+2. **Gameplay** : Système de consommation de deutérium (fuel) lors des déplacements
+3. **UI/UX** : Affichage du stock de ressources dans le HUD principal
+4. **Progression** : Système de retour à la base et d’améliorations (modules, upgrades)
+5. **Audio/VFX** : Effets sonores et visuels lors du minage/collecte
+6. **Optimisation** : Performance, gestion des priorités d’interaction
 
 ---
 **Développé pour le projet Infinite Space** 🚀 

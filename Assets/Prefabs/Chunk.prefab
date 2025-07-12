@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourcePrefabs:
   - {fileID: 3310265143555564979, guid: 370d68534adb37f43843b371511b9fc1, type: 3}
+  - {fileID: 1161370587884172556, guid: 48e422321702fdd4aaad901da843319b, type: 3}
   enemyPrefabs:
   - {fileID: 185592196801634420, guid: cb91c3a8114ea294eb8452cef209660e, type: 3}
   anomalyPrefabs:
