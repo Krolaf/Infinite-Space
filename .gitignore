@@ -1,0 +1,96 @@
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+[Bb]urstCache/
+[Bb]ee/
+[Bb]uildInstructions/
+[Bb]uildProfiles/
+[Ss]tateCache/
+[Ss]criptAssemblies/
+[Uu]serSettings/
+[Ss]earch/
+[Oo]bj/
+[Oo]utput/
+
+# Visual Studio / VSCode
+.vscode/
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.pidb.meta
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Unity Asset Store tools
+[Aa]ssets/AssetStoreTools*
+
+# Crash Reports
+sysinfo.txt
+
+# Autres fichiers à ne pas versionner
+*.apk
+*.aab
+*.unitypackage
+*.keystore
+*.pem
+*.p12
+*.key
+*.crt
+*.cert
+*.mobileprovision
+*.ipa
+*.xcodeproj
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata/
+
+# Données personnelles ou contextuelles
+contextfiles/
+
+# Fichiers de sauvegarde
+*.bak
+*.old
+*.backup
+
+# Fichiers générés par Unity Collaborate
+.collabignore
+
+# Fichiers de build locaux
+Build/
+Builds/
+
+# Fichiers de logs
+*.log
+
+# Fichiers de configuration locaux
+*.local
+*.swp
+*.swo
+
+# Fichiers de test
+*.test*
+
+# Fichiers de crash
+*.dmp
+
+# Fichiers de cache
+.cache/ 
