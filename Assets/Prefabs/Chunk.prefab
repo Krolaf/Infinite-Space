@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8650426666413330997}
+  - component: {fileID: 321605138575340314}
+  - component: {fileID: 5337071790458470231}
   m_Layer: 0
   m_Name: Chunk
   m_TagString: Untagged
@@ -28,58 +30,39 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8176104616724483189}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7245120257554718208
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8176104616724483189}
-  - component: {fileID: 8711729286768974640}
-  m_Layer: 0
-  m_Name: SpaceObjectSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8176104616724483189
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7245120257554718208}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8650426666413330997}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8711729286768974640
+--- !u!114 &321605138575340314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7245120257554718208}
+  m_GameObject: {fileID: 143910302659735605}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f6ed98e4c8e0eb4b92fab04f7f25725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourcePrefab: {fileID: 3310265143555564979, guid: 370d68534adb37f43843b371511b9fc1, type: 3}
-  enemyPrefab: {fileID: 185592196801634420, guid: cb91c3a8114ea294eb8452cef209660e, type: 3}
-  anomalyPrefab: {fileID: 4455858267898858412, guid: bf5584b0ea1a66646b25fd5e2ff7b9e8, type: 3}
-  resourceCount: {x: 2, y: 5}
-  enemyCount: {x: 0, y: 2}
-  anomalyCount: {x: 0, y: 1}
-  chunkSize: 20
+  resourcePrefabs:
+  - {fileID: 3310265143555564979, guid: 370d68534adb37f43843b371511b9fc1, type: 3}
+  enemyPrefabs:
+  - {fileID: 185592196801634420, guid: cb91c3a8114ea294eb8452cef209660e, type: 3}
+  anomalyPrefabs:
+  - {fileID: 4455858267898858412, guid: bf5584b0ea1a66646b25fd5e2ff7b9e8, type: 3}
+  merchantPrefabs:
+  - {fileID: 5617499920367830375, guid: 640654eebeedc2f45addc4b0dec66ab2, type: 3}
+--- !u!114 &5337071790458470231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143910302659735605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f248900f141d8b40ae91d31e46e0fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coord: {x: 0, y: 0}

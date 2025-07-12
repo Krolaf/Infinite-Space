@@ -2,37 +2,31 @@ using UnityEngine;
 
 public class SpaceObjectSpawner : MonoBehaviour
 {
-    [Header("Prefabs à générer")]
-    public GameObject resourcePrefab;
-    public GameObject enemyPrefab;
-    public GameObject anomalyPrefab;
-
-    [Header("Quantité aléatoire par chunk")]
-    public Vector2Int resourceCount = new Vector2Int(2, 5);
-    public Vector2Int enemyCount = new Vector2Int(0, 2);
-    public Vector2Int anomalyCount = new Vector2Int(0, 1);
-
-    [Header("Taille du chunk")] 
-    public float chunkSize = 20f;
-
-    void Start()
+    public GameObject[] resourcePrefabs, enemyPrefabs, anomalyPrefabs, merchantPrefabs;
+    public void SpawnObjects(Vector2Int chunkCoord)
     {
-        SpawnObjects(resourcePrefab, Random.Range(resourceCount.x, resourceCount.y + 1));
-        SpawnObjects(enemyPrefab, Random.Range(enemyCount.x, enemyCount.y + 1));
-        SpawnObjects(anomalyPrefab, Random.Range(anomalyCount.x, anomalyCount.y + 1));
+        int zone = Chunk.GetZone(chunkCoord);
+        if (zone == 0) return; // Zone de sécurité
+
+        // Exemple : plus on s'éloigne, plus il y a d'ennemis
+        int nbRessources = Mathf.Max(1, 5 - zone);
+        int nbEnnemis = Mathf.Max(0, zone - 1);
+
+        for (int i = 0; i < nbRessources; i++)
+            Spawn(resourcePrefabs, chunkCoord, "Ressource");
+        for (int i = 0; i < nbEnnemis; i++)
+            Spawn(enemyPrefabs, chunkCoord, "Ennemi");
+        // Idem pour anomalies, marchands...
+
+        Debug.Log($"[Spawner] Généré {nbRessources} ressources, {nbEnnemis} ennemis dans chunk {chunkCoord}, zone {zone}");
     }
 
-    void SpawnObjects(GameObject prefab, int count)
+    void Spawn(GameObject[] prefabs, Vector2Int chunkCoord, string type)
     {
-        if (prefab == null || count <= 0) return;
-        for (int i = 0; i < count; i++)
-        {
-            Vector2 localPos = new Vector2(
-                Random.Range(-chunkSize / 2f, chunkSize / 2f),
-                Random.Range(-chunkSize / 2f, chunkSize / 2f)
-            );
-            Vector3 worldPos = transform.position + new Vector3(localPos.x, localPos.y, 0);
-            Instantiate(prefab, worldPos, Quaternion.identity, transform);
-        }
+        if (prefabs.Length == 0) { Debug.LogError($"Aucun prefab pour {type}"); return; }
+        var prefab = prefabs[Random.Range(0, prefabs.Length)];
+        Vector3 pos = transform.position + (Vector3)(Random.insideUnitCircle * GameManager.Instance.chunkSize / 2f);
+        var obj = Instantiate(prefab, pos, Quaternion.identity, transform);
+        Debug.Log($"[Spawner] Génère {type} {prefab.name} à {pos} dans chunk {chunkCoord}");
     }
-} 
+}  
